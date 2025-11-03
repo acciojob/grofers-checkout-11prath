@@ -12,8 +12,42 @@
     <td class="prices">20</td>
   </tr>
   <tr>
-    <td class="item">Milk</td>
+    <td class="item">Oranges</td>
     <td class="prices">50</td>
   </tr>
 </table>
+
+<script>
+  // Create button
+  const getSumBtn = document.createElement("button");
+  getSumBtn.textContent = "Get Total Price";
+  document.body.appendChild(getSumBtn);
+
+  // Function to calculate and display total
+  const getSum = () => {
+    const priceElements = document.querySelectorAll(".prices");
+    let total = 0;
+
+    // Add all prices (skip header if it's text)
+    priceElements.forEach((price, index) => {
+      if (!isNaN(price.textContent)) {
+        total += parseInt(price.textContent);
+      }
+    });
+
+    // Create new row for total
+    const table = document.querySelector("table");
+    const newRow = document.createElement("tr");
+    const newCell = document.createElement("td");
+
+    newCell.colSpan = 2;
+    newCell.textContent = "Total Price: " + total;
+
+    newRow.appendChild(newCell);
+    table.appendChild(newRow);
+  };
+
+  // Add click event
+  getSumBtn.addEventListener("click", getSum);
+</script>
 
