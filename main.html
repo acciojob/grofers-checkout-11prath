@@ -1,53 +1,73 @@
-<table border="1">
-  <tr>
-    <th class="item">Item</th>
-    <th class="prices">Price</th>
-  </tr>
-  <tr>
-    <td class="item">Apples</td>
-    <td class="prices">30</td>
-  </tr>
-  <tr>
-    <td class="item">Bananas</td>
-    <td class="prices">20</td>
-  </tr>
-  <tr>
-    <td class="item">Oranges</td>
-    <td class="prices">50</td>
-  </tr>
-</table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grofers Checkout</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body class="p-5">
+  <div class="container">
+    <h1 class="text-center mb-4">Grofers Checkout</h1>
 
-<script>
-  // Create button
-  const getSumBtn = document.createElement("button");
-  getSumBtn.textContent = "Get Total Price";
-  document.body.appendChild(getSumBtn);
+    <!-- Grocery Table -->
+    <table class="table table-striped" id="grocery-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="item">Apples</td>
+          <td class="prices">50</td>
+        </tr>
+        <tr>
+          <td class="item">Bananas</td>
+          <td class="prices">30</td>
+        </tr>
+        <tr>
+          <td class="item">Milk</td>
+          <td class="prices">40</td>
+        </tr>
+      </tbody>
+    </table>
 
-  // Function to calculate and display total
-  const getSum = () => {
-    const priceElements = document.querySelectorAll(".prices");
-    let total = 0;
+    <button id="calculate" class="btn btn-primary">Calculate Total</button>
+  </div>
 
-    // Add all prices (skip header if it's text)
-    priceElements.forEach((price, index) => {
-      if (!isNaN(price.textContent)) {
-        total += parseInt(price.textContent);
-      }
+  <script>
+    const calculateBtn = document.getElementById("calculate");
+    const table = document.getElementById("grocery-table");
+
+    calculateBtn.addEventListener("click", function() {
+      // Get all price elements
+      const prices = document.querySelectorAll(".prices");
+      let total = 0;
+
+      prices.forEach(price => {
+        total += parseFloat(price.textContent);
+      });
+
+      // Create new row for total
+      const totalRow = document.createElement("tr");
+      const totalCell = document.createElement("td");
+
+      totalCell.setAttribute("colspan", "2");
+      totalCell.classList.add("fw-bold", "text-center");
+      totalCell.textContent = "Total Price: ₹" + total;
+
+      totalRow.appendChild(totalCell);
+      table.querySelector("tbody").appendChild(totalRow);
+
+      // Disable button after calculation to avoid duplicate rows
+      calculateBtn.disabled = true;
     });
-
-    // Create new row for total
-    const table = document.querySelector("table");
-    const newRow = document.createElement("tr");
-    const newCell = document.createElement("td");
-
-    newCell.colSpan = 2;
-    newCell.textContent = "Total Price: " + total;
-
-    newRow.appendChild(newCell);
-    table.appendChild(newRow);
-  };
-
-  // Add click event
-  getSumBtn.addEventListener("click", getSum);
-</script>
+  </script>
+</body>
+</html>
 
